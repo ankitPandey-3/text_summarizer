@@ -15,8 +15,9 @@ app.use(express.urlencoded({extended:true}));
 app.use(express.static("public"));
 app.use(cookieParser());
 
-app.get('/',(req,res)=>{
-    res.send('<h1>Hey SERVER!</h1>');
-})
+//route import
+import AUTHROUTER from './routes/user.route.js';
+
+app.use('/api/v1/auth',AUTHROUTER);
 
 export { app };
