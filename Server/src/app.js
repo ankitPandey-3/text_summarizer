@@ -17,7 +17,9 @@ app.use(cookieParser());
 
 //route import
 import AUTHROUTER from './routes/user.route.js';
+import SUMMARIZERROUTER from './routes/summary.route.js';
 
 app.use('/api/v1/auth',AUTHROUTER);
+app.use('/api/v1/summ', SUMMARIZERROUTER);
 
 export { app };

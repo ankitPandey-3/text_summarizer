@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
-import { User } from "./user.model";
+import { User } from "./user.model.js";
 
 const summarizedSchema = new mongoose.Schema({
-    createdBy:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: User
-    },
+    // createdBy:{
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: User
+    // },
     inputText:{
         type: String,
         required: true,
@@ -13,9 +13,11 @@ const summarizedSchema = new mongoose.Schema({
     },
     generatedText:{
         type: String,
-        required: true,
         default: ''
-    }
+    },
+    // title:{
+    //     type: String
+    // }
 },{timestamps: true});
 
 export const summarizeSchema = mongoose.model('summarizeSchema', summarizedSchema); 
