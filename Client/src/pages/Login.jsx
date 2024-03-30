@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 export function Login() {
+  const [errMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -13,10 +14,15 @@ export function Login() {
     try {
       const response = await axios.post('http://localhost:8000/api/v1/auth/login', formData);
       if (response.data.statusCode === 200) {
+        setErrorMessage('');
         navigate('/summarizer');
       }
     } catch (error) {
-
+      if (error.response && error.response.data && error.response.data.message) {
+        setErrorMessage('!!' + error.response.data.message);
+      } else {
+        setErrorMessage('An error occurred while processing your request.');
+      }
     }
   }
 
@@ -81,6 +87,7 @@ export function Login() {
             Don't have an account
           </a>
         </div>
+        <h2 className="mt-6 text-yellow-600 text-center">{errMessage}</h2>
       </div>
     </div>
   );
