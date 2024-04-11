@@ -35,7 +35,13 @@ const registerUser = asyncHandler(async (req, res) => {
 
     if (existedUser) {
         return res.status(409).json(
-            new ApiError(409, "User with email or username already exists")
+            new ApiError(409, "User already exist !!")
+        );
+    }
+
+    if(password.length < 8 || password.length > 14){
+        return res.status(400).json(
+            new ApiError(400, "Invalid Password Length")
         );
     }
     

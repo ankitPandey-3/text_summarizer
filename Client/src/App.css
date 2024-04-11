@@ -40,3 +40,9 @@
 .read-the-docs {
   color: #888;
 }
+
+.Toastify__toast-body {
+  width: 400px; /* Adjust width as needed */
+  height: auto; /* Adjust height as needed */
+  max-height: 200px; /* Optional: Add a maximum height */
+}

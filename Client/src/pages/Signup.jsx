@@ -1,6 +1,9 @@
 import React,{ useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+
+
 export function Signup() {
   const [errMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
@@ -18,14 +21,17 @@ export function Signup() {
       console.log(response);
       if (response.data.statusCode === 200) {
         setErrorMessage('');
+        toast.success(response.data.message);
         navigate('/login');
       }
     } catch (error) {
       if (error.response && error.response.data && error.response.data.message) {
-        setErrorMessage('!!' + error.response.data.message);
+        // setErrorMessage('!!' + error.response.data.message);
+        toast.error(error.response.data.message);
       } else {
         setErrorMessage('An error occurred while processing your request.');
       }
+      
     }
 
   }
@@ -42,7 +48,7 @@ export function Signup() {
       </div>
       {/* Right: sign up Form */}
       <div className="lg:p-36 md:p-52 sm:p-20 p-8 w-full lg:w-1/2">
-        <h1 class="text-3xl font-bold mb-4 mr-4 font-serif md:text-4xl md:mr-8">Text Summarizer</h1>
+        <h1 className="text-3xl font-bold mb-4 mr-4 font-serif md:text-4xl md:mr-8">Text Summarizer</h1>
         <h1 className="text-2xl font-semibold mb-4">Sign Up</h1>
         <form onSubmit={handleSubmit}>
           {/* Full Name Input */}
@@ -91,7 +97,7 @@ export function Signup() {
           {/* Password Input */}
           <div className="mb-4">
             <label htmlFor="password" className="block text-gray-600">
-              Password
+              Password (8-14 characters)
             </label>
             <input
               type="password"
@@ -99,7 +105,7 @@ export function Signup() {
               name="password"
               className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500"
               autoComplete="off"
-              placeholder='password'
+              placeholder='password (8-14 characters)'
             />
           </div>
           {/* Register Button */}

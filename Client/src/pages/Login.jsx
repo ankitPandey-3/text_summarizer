@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-export function Login() {
+import toast from 'react-hot-toast';
+
+
+export function Login({setIsLoggedIn}) {
   const [errMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
@@ -12,17 +15,25 @@ export function Login() {
       password: event.target.password.value
     }
     try {
-      const response = await axios.post('http://localhost:8000/api/v1/auth/login', formData);
+      const response = await axios.post('http://localhost:8000/api/v1/auth/login', formData,{
+        withCredentials: true
+      });
+      console.log(response.data.data)
+      localStorage.setItem('accessToken', response.data.data.accessToken);
+      localStorage.setItem('user', response.data.data.user._id);
       if (response.data.statusCode === 200) {
-        setErrorMessage('');
-        navigate('/summarizer');
+        setIsLoggedIn(true);
+        toast.success(response.data.message);
+        navigate('/');
       }
     } catch (error) {
-      if (error.response && error.response.data && error.response.data.message) {
-        setErrorMessage('!!' + error.response.data.message);
-      } else {
-        setErrorMessage('An error occurred while processing your request.');
-      }
+      // if (error.response && error.response.data && error.response.data.message) {
+      //   setErrorMessage('!!' + error.response.data.message);
+      // } else {
+      //   setErrorMessage('An error occurred while processing your request.');
+      // }
+
+      toast.error(error.response.data.message);
     }
   }
 
@@ -39,7 +50,7 @@ export function Login() {
       </div>
       {/* Right: Login Form */}
       <div className="lg:p-36 md:p-52 sm:p-20 p-8 w-full lg:w-1/2">
-        <h1 class="text-3xl font-bold mb-4 mr-4 font-serif md:text-4xl md:mr-8">Text Summarizer</h1>
+        <h1 className="text-3xl font-bold mb-4 mr-4 font-serif md:text-4xl md:mr-8">Text Summarizer</h1>
         <h1 className="text-2xl font-semibold mb-4">Login</h1>
         <form onSubmit={handleSubmit}>
           {/* Username Input */}
