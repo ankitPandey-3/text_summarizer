@@ -6,6 +6,7 @@ import axios from 'axios';
 
 export function SideBar ({setIsLoggedIn}) {
   const [onClick, setOnClick] = useState(false);
+  const [name, setName] = useState(localStorage.getItem('user'))
   const navigate = useNavigate();
   const handleResize = () => {
     if (window.innerWidth >= 1024) {
@@ -51,10 +52,10 @@ export function SideBar ({setIsLoggedIn}) {
       <div className="mt-6 flex flex-1 flex-col justify-between">
         <nav className="-mx-3 space-y-6 ">
           <div className="space-y-3 ">
-            <label className="px-3 text-xl font-semibold uppercase text-white">User</label>
+            <label className="px-3 text-2xl font-semibold uppercase text-white">{name}</label>
             <a
               className="flex transform items-center rounded-lg px-3 py-2 text-white transition-colors duration-300 hover:bg-gray-50 hover:text-gray-700"
-              href="#"
+              href="/change-password"
             >
               <Settings className="h-5 w-5" aria-hidden="true" />
               <span className="mx-2 text-l font-medium">Change Password</span>

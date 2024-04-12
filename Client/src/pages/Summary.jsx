@@ -8,7 +8,6 @@ import toast from "react-hot-toast";
 export const Summary = ({ isLoggedIn, setIsLoggedIn }) => {
   const [inputText, setInputText] = useState("");
   const [summary, setSummary] = useState("");
-  const [error, setError] = useState("");
   const [length, setLength] = useState("1");
   const [change, setChange] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -24,7 +23,7 @@ export const Summary = ({ isLoggedIn, setIsLoggedIn }) => {
       });
       setSummary(response.data.data.generatedText); // Assuming the response contains a 'summary' field
     } catch (error) {
-      setError("An error occurred while fetching the summary."); // You can handle errors appropriately
+      toast.error("Some error occured")
     }
   };
 
@@ -68,7 +67,10 @@ export const Summary = ({ isLoggedIn, setIsLoggedIn }) => {
       const response = await axios.post("http://localhost:8000/api/v1/summ/summarizer/save", formData, {
         withCredentials: true
       })
-      toast.success("Saved");
+      if(response.data.statusCode === 201){
+        toast.success("Saved");
+      }
+      
     } catch (error) {
       toast.error(error.response.data.message);
     }
@@ -94,7 +96,7 @@ export const Summary = ({ isLoggedIn, setIsLoggedIn }) => {
         // Conditional rendering based on login status
         <div className={isLoggedIn ? "flex" : ""}>
           <div className=' w-auto lg:w-64 '>
-            {change && isLoggedIn ? <SideBar setIsLoggedIn={setIsLoggedIn} /> : <></>}
+            {change&&isLoggedIn ? <SideBar setIsLoggedIn={setIsLoggedIn} /> : <></>}
           </div>
           <div className='w-full lg:w-11/12 '>
             {isLoggedIn ? (
@@ -170,7 +172,7 @@ export const Summary = ({ isLoggedIn, setIsLoggedIn }) => {
                     >
                       <textarea
                         className="w-3/4 h-96 px-3 py-2 border rounded mb-4 font-serif text-orange-800 lg:ml-14 mr-2 ml-4"
-                        placeholder="Add your text (150 characters)"
+                        placeholder="Add your text here"
                         id="inputText"
                         name="inputText"
                         type="text"
@@ -189,9 +191,9 @@ export const Summary = ({ isLoggedIn, setIsLoggedIn }) => {
                     <div className=" w-full flex flex-col items-center">
                       <textarea
                         className="w-3/4 h-96 px-3 py-2 border rounded mb-4 font-serif text-orange-800 lg:ml-14 mr-2 mt-4 ml-4"
+                        placeholder="summary will appear here after some time ..."
+                        value={summary}
                         >
-                        {summary ||
-                          "Summary Will Appear Here (Please wait for a few seconds after submitting...)"}
                       </textarea>
                     </div>
                   </div>

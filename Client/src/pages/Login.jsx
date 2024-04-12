@@ -5,7 +5,6 @@ import toast from 'react-hot-toast';
 
 
 export function Login({setIsLoggedIn}) {
-  const [errMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -20,7 +19,8 @@ export function Login({setIsLoggedIn}) {
       });
       console.log(response.data.data)
       localStorage.setItem('accessToken', response.data.data.accessToken);
-      localStorage.setItem('user', response.data.data.user._id);
+      localStorage.setItem('refreshToken', response.data.data.refreshToken);
+      localStorage.setItem('user', response.data.data.user.username);
       if (response.data.statusCode === 200) {
         setIsLoggedIn(true);
         toast.success(response.data.message);
@@ -81,12 +81,6 @@ export function Login({setIsLoggedIn}) {
               placeholder='password'
             />
           </div>
-          {/* Forgot Password Link */}
-          <div className="mb-6 text-yellow-600">
-            <a href="#" className="hover:underline">
-              Forgot Password?
-            </a>
-          </div>
           {/* Login Button */}
           <button type="submit" className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold rounded-md py-2 px-4 w-full">
             Login
@@ -98,7 +92,6 @@ export function Login({setIsLoggedIn}) {
             Don't have an account
           </a>
         </div>
-        <h2 className="mt-6 text-yellow-600 text-center">{errMessage}</h2>
       </div>
     </div>
   );
