@@ -19,8 +19,9 @@ app.use(checkAuth)
 //route import
 import AUTHROUTER from './routes/user.route.js';
 import SUMMARIZERROUTER from './routes/summary.route.js';
+import TRANSLATORROUTER from './routes/translator.route.js';
 
 app.use('/api/v1/auth',AUTHROUTER);
 app.use('/api/v1/summ', SUMMARIZERROUTER);
-
+app.use('/api/v1/tool',TRANSLATORROUTER);
 export { app };
