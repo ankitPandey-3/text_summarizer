@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request
-from transformers import T5ForConditionalGeneration, T5Tokenizer
+from transformers import T5ForConditionalGeneration, T5Tokenizer, pipeline
 import torch
 
 app = FastAPI()
@@ -11,6 +11,21 @@ tokenizer = T5Tokenizer.from_pretrained(tokenizer_path)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model.to(device)
+translator = pipeline('translation_en_to_hi', model='Helsinki-NLP/opus-mt-en-hi')
+
+
+def translate_text_english_to_hindi(prompt):
+    translated_text = translator(prompt, max_length=400, truncation=True)[0]['translation_text']
+    print(translated_text)
+    return translated_text
+
+@app.post("/translate")
+async def translate(request: Request):
+    data = await request.json()
+    input_text = data['text']
+    print(input_text)
+    translated_text = translate_text_english_to_hindi(input_text)
+    return {"text": translated_text}
 
 @app.post("/predict")
 async def predict(request: Request):
