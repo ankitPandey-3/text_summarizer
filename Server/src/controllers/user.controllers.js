@@ -190,9 +190,10 @@ const changeCurrentPassword = asyncHandler(async(req, res) => {
 const refreshAccessToken = asyncHandler(async (req, res) => {
     const incomingRefreshToken = req.cookies.refreshToken;
 
-    if (!incomingRefreshToken) {
-        throw new ApiError(401, "unauthorized request")
-    }
+    // if (!incomingRefreshToken) {
+
+    //     throw new ApiError(401, "unauthorized request")
+    // }
 
     try {
         const decodedToken = jwt.verify(
@@ -242,7 +243,7 @@ const validateToken = asyncHandler(async(req, res) => {
         )
     }
     else{
-        console.log('Hello from error')
+        
         return res.status(200).json(
             new ApiError(404, "Token Invalid")
         )
