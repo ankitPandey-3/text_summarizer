@@ -7,6 +7,7 @@ import { Summary } from "./pages/Summary.jsx";
 import { Home } from "./pages/Home.jsx";
 import { View } from "./pages/View.jsx";
 import { ChangePassword } from "./pages/ChangePassword.jsx";
+import { Translator } from "./pages/Translator.jsx";
 import axios from "axios";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -81,6 +82,7 @@ function App() {
         <Route path='/login' element={<Login setIsLoggedIn={setIsLoggedIn}/>} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/summarizer' element={<Summary isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>} />
+        <Route path='/translator' element={<Translator isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>} />
         <Route path='/' element={<Home isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>} />
         <Route path='/summarizer/:title' element={<View isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>} />
         <Route path='/change-password' element={<ChangePassword isLoggedIn={isLoggedIn}/>}/>

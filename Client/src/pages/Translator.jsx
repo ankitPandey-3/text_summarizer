@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { SideBar } from "../components/SideBar";
-import { Save, Copy } from 'lucide-react'
+import { Copy } from 'lucide-react'
 import { RotatingLines } from "react-loader-spinner";
 import toast from "react-hot-toast";
 
-export const Summary = ({ isLoggedIn, setIsLoggedIn }) => {
+export const Translator = ({ isLoggedIn, setIsLoggedIn }) => {
   const [inputText, setInputText] = useState("");
   const [summary, setSummary] = useState("");
-  const [length, setLength] = useState("1");
   const [change, setChange] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -16,12 +15,13 @@ export const Summary = ({ isLoggedIn, setIsLoggedIn }) => {
     e.preventDefault();
     try {
       const formData = {
-        inputText: inputText // using the state variable directly
+        text: inputText // using the state variable directly
       };
-      const response = await axios.post("http://localhost:8000/api/v1/summ/summarizer", formData, {
+      const response = await axios.post("http://localhost:8000/api/v1/tool/translate", formData, {
         withCredentials: true
       });
-      setSummary(response.data.data.generatedText); // Assuming the response contains a 'summary' field
+      console.log(response.data.data)
+      setSummary(response.data.data.generatedText.text); // Assuming the response contains a 'summary' field
     } catch (error) {
       toast.error("Some error occured")
     }
@@ -108,9 +108,6 @@ export const Summary = ({ isLoggedIn, setIsLoggedIn }) => {
                     {/* Conditional rendering based on 'change' state */}
                     {change ? (
                       <div>
-                        {/* <label className="text-white text-base lg:text-xl ml-9">
-                          Length : {length}
-                        </label> */}
                         <input
                           type="range"
                           min={1}
@@ -156,11 +153,11 @@ export const Summary = ({ isLoggedIn, setIsLoggedIn }) => {
                       <Copy className="h-5 w-5" aria-hidden="true" />
                     </button>
 
-                    <button
+                    {/* <button
                       className="ml-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded self-center"
                       onClick={handleSave}>
                       <Save className="h-5 w-5" aria-hidden="true" />
-                    </button>
+                    </button> */}
                   </div>
                 </header>
                 {/* Main content */}

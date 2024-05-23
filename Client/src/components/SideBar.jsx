@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Settings, LogOut, Layers, Archive, Server, Cpu, Brain, Menu} from 'lucide-react';
+import { Settings, LogOut, Layers, Archive, Server, Menu, Languages} from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast'
 import axios from 'axios';
@@ -87,20 +87,13 @@ export function SideBar ({setIsLoggedIn}) {
           </div>
 
           <div className="space-y-3 ">
-            <label className="px-3 text-xl font-semibold uppercase text-white">Technologies</label>
+            <label className="px-3 text-xl font-semibold uppercase text-white">Other Tools</label>
             <a
               className="flex transform items-center rounded-lg px-3 py-2 text-white transition-colors duration-300 hover:bg-gray-50 hover:text-gray-700"
-              href="#"
+              href="/translator"
             >
-              <Server className="h-5 w-5" aria-hidden="true" />
-              <span className="mx-2 text-l font-medium">Web Application</span>
-            </a>
-            <a
-              className="flex transform items-center rounded-lg px-3 py-2 text-white transition-colors duration-300 hover:bg-gray-50 hover:text-gray-700"
-              href="#"
-            >
-              <Cpu className="h-5 w-5" aria-hidden="true" />
-              <span className="mx-2 text-l font-medium">Transformer</span>
+              <Languages className="h-5 w-5" aria-hidden="true" />
+              <span className="mx-2 text-l font-medium">Translator</span>
             </a>
           </div>
         </nav>
